@@ -1,72 +1,29 @@
 import React from 'react'
+import AcceptTask from './AcceptTask'
+import NewTask from './NewTask'
+import CompleteTask from './CompleteTask'
+import FailedTask from './FailedTask'
 
-const TaskList = () => {
-  return (
-    <div id='Tasklist' className='h-[55%] overflow-x-auto w-full py- items-center justify-start gap-5 flex-nowrap  mt-10 flex '>
-      <div className='h-full w-[300px] flex-shrink-0 p-5 bg-red-400 rounded-xl'>
-            <div className='flex justify-between items-center'>
-                <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-                <h4 className='text-sm'>9 may 2026</h4>
-            </div>
-            <h2 className='mt-5 text-xl font-semibold'>Make a youtube video</h2>
-            <p className='text-sm mt-2'>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia laborum odit enim nihil obcaecati ex rem cum tenetur voluptates magnam!
-            </p>
-      </div>
-      <div className='h-full w-[300px] flex-shrink-0 p-5 bg-yellow-400 rounded-xl'>
-            <div className='flex justify-between items-center'>
-                <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-                <h4 className='text-sm'>9 may 2026</h4>
-            </div>
-            <h2 className='mt-5 text-xl font-semibold'>Make a youtube video</h2>
-            <p className='text-sm mt-2'>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia laborum odit enim nihil obcaecati ex rem cum tenetur voluptates magnam!
-            </p>
-      </div>
-      <div className='h-full w-[300px] flex-shrink-0 p-5 bg-blue-400 rounded-xl'>
-            <div className='flex justify-between items-center'>
-                <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-                <h4 className='text-sm'>9 may 2026</h4>
-            </div>
-            <h2 className='mt-5 text-xl font-semibold'>Make a youtube video</h2>
-            <p className='text-sm mt-2'>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia laborum odit enim nihil obcaecati ex rem cum tenetur voluptates magnam!
-            </p>
-      </div>
-      <div className='h-full w-[300px] flex-shrink-0 p-5 bg-green-400 rounded-xl'>
-            <div className='flex justify-between items-center'>
-                <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-                <h4 className='text-sm'>9 may 2026</h4>
-            </div>
-            <h2 className='mt-5 text-xl font-semibold'>Make a youtube video</h2>
-            <p className='text-sm mt-2'>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia laborum odit enim nihil obcaecati ex rem cum tenetur voluptates magnam!
-            </p>
-      </div>
-      <div className='h-full w-[300px] flex-shrink-0 p-5 bg-pink-400 rounded-xl'>
-            <div className='flex justify-between items-center'>
-                <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-                <h4 className='text-sm'>9 may 2026</h4>
-            </div>
-            <h2 className='mt-5 text-xl font-semibold'>Make a youtube video</h2>
-            <p className='text-sm mt-2'>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia laborum odit enim nihil obcaecati ex rem cum tenetur voluptates magnam!
-            </p>
-      </div>
-      <div className='h-full w-[300px] flex-shrink-0 p-5 bg-gray-400 rounded-xl'>
-            <div className='flex justify-between items-center'>
-                <h3 className='bg-red-600 text-sm px-3 py-1 rounded'>High</h3>
-                <h4 className='text-sm'>9 may 2026</h4>
-            </div>
-            <h2 className='mt-5 text-xl font-semibold'>Make a youtube video</h2>
-            <p className='text-sm mt-2'>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia laborum odit enim nihil obcaecati ex rem cum tenetur voluptates magnam!
-            </p>
-      </div>
-
-      
-    </div>
-  )
+const TaskList = ({ data }) => {
+    return (
+        <div id='Tasklist' className='flex gap-5 overflow-x-auto mt-10 pb-5 w-full'>
+            {data.tasks.map((task, index) => {
+                if (task.active) {
+                    return <AcceptTask key={index} data={task} />
+                }
+                if (task.newTask) {
+                    return <NewTask key={index} data={task} />
+                }
+                if (task.completed) {
+                    return <CompleteTask key={index} data={task} />
+                }
+                if (task.failed) {
+                    return <FailedTask key={index} data={task} />
+                }
+                return null
+            })}
+        </div>
+    )
 }
 
 export default TaskList
