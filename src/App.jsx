@@ -1,107 +1,56 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Login from './components/Auth/Login'
 import EmployeeDashboard from './components/Dashboard/EmployeeDashboard'
 import AdminDashboard from './components/Dashboard/AdminDashboard'
+import ProtectedRoute from './components/Auth/ProtectedRoute'
 import { AuthContext } from './context/AuthProvider'
 
 const App = () => {
-
-  const [user, setUser] = useState(null)
-  const [loggedInUserData, setLoggedInUserData] = useState(null)
-
- 
-  const authData = useContext(AuthContext)
-
-  // Check localStorage on refresh
-  useEffect(() => {
-
-    const loggedInUser = JSON.parse(
-      localStorage.getItem('loggedInUser')
-    )
-
-    if (loggedInUser) {
-
-      setUser(loggedInUser.role)
-      setLoggedInUserData(loggedInUser.data)
-
-    }
-
-  }, [])
-
-
-
-
-  const handleLogin = (email, password) => {
-
-  // Admin Login
-  if (
-    email === 'admin@example.com' &&
-    password === '123'
-  ) {
-
-    const adminData = authData?.admin
-
-    setUser('admin')
-    setLoggedInUserData(adminData)
-
-    localStorage.setItem(
-      'loggedInUser',
-      JSON.stringify({
-        role: 'admin',
-        data: adminData
-      })
-    )
-
-  }
-
-  // Employee Login
-  else {
-
-    const employee = authData?.employees?.find(
-      (e) =>
-        e.email === email &&
-        e.password === password
-    )
-
-    if (employee) {
-
-      setUser('employee')
-      setLoggedInUserData(employee)
-
-      localStorage.setItem(
-        'loggedInUser',
-        JSON.stringify({
-          role: 'employee',
-          data: employee
-        })
-      )
-
-    } else {
-
-      alert('Invalid Credentials')
-
-    }
-  }
-}
-
+  const { user } = useContext(AuthContext)
 
   return (
-    <>
+    <Routes>
+      {/* Login Route */}
+      <Route
+        path="/login"
+        element={
+          user
+            ? <Navigate to={user === 'admin' ? '/admin/dashboard' : '/employee/dashboard'} replace />
+            : <Login />
+        }
+      />
 
-      
-      {!user && (
-        <Login handleLogin={handleLogin} />
-      )}
+      {/* Admin Dashboard */}
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
 
-      {user === 'admin' && (
-        <AdminDashboard data={loggedInUserData} />
-      )}
+      {/* Employee Dashboard */}
+      <Route
+        path="/employee/dashboard"
+        element={
+          <ProtectedRoute allowedRole="employee">
+            <EmployeeDashboard />
+          </ProtectedRoute>
+        }
+      />
 
-      {user === 'employee' && (
-        <EmployeeDashboard data={loggedInUserData} />
-      )}
-
-    </>
+      {/* Catch-all redirect */}
+      <Route
+        path="*"
+        element={
+          user
+            ? <Navigate to={user === 'admin' ? '/admin/dashboard' : '/employee/dashboard'} replace />
+            : <Navigate to="/login" replace />
+        }
+      />
+    </Routes>
   )
 }
 
