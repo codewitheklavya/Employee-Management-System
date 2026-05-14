@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, ShieldCheck } from 'lucide-react'
+import { Eye, EyeOff } from 'lucide-react'
 import { AuthContext } from '../../context/AuthProvider'
 
 const Login = () => {
@@ -20,8 +20,13 @@ const Login = () => {
 
     setTimeout(() => {
       const result = login(email, password)
+
       if (result.success) {
-        navigate(result.role === 'admin' ? '/admin/dashboard' : '/employee/dashboard')
+        navigate(
+          result.role === 'admin'
+            ? '/admin/dashboard'
+            : '/employee/dashboard'
+        )
       } else {
         setError('Invalid email or password')
         setLoading(false)
@@ -30,31 +35,39 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-5 relative overflow-hidden bg-black">
-      {/* Animated background orbs */}
-      
-
-      <div className="w-full max-w-[420px] bg-[#1a1a2e]/80 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-10 shadow-2xl relative z-10 animate-[fadeInUp_0.6s_ease-out] sm:p-10 max-sm:p-7">
-        {/* Logo */}
+    <div className="min-h-screen flex items-center justify-center p-5 bg-[#f4f9ff]">
+      <div className="w-full max-w-[430px] bg-white border border-[#dbeafe] rounded-2xl p-10 shadow-xl">
         
-
         {/* Heading */}
         <div className="text-center mb-8">
-          <h1 className="text-[28px] font-bold tracking-tight text-[#f0f0f5]">Welcome Back</h1>
-          <p className="text-[#8b8ba3] mt-1.5 text-sm">Sign in to your workspace</p>
+          <h1 className="text-[32px] font-bold tracking-tight text-[#387ED1]">
+            Welcome Back
+          </h1>
+
+          <p className="text-gray-500 mt-2 text-sm">
+            Sign in to your workspace
+          </p>
         </div>
 
         {/* Error */}
         {error && (
-          <div className="bg-rose-500/10 border border-rose-500/30 text-rose-400 px-4 py-2.5 rounded-lg text-[13px] mb-5 text-center animate-[fadeInUp_0.3s_ease]">
+          <div className="bg-red-50 border border-red-200 text-red-500 px-4 py-3 rounded-lg text-sm mb-5 text-center">
             {error}
           </div>
         )}
 
         {/* Form */}
         <form onSubmit={submitHandler} className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="login-email" className="text-[13px] font-medium text-[#8b8ba3] tracking-wide">Email Address</label>
+          
+          {/* Email */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="login-email"
+              className="text-sm font-medium text-[#387ED1]"
+            >
+              Email Address
+            </label>
+
             <input
               id="login-email"
               type="email"
@@ -63,12 +76,19 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
-              className="w-full bg-white/[0.04] border border-white/[0.06] text-[#f0f0f5] py-3 px-4 rounded-lg text-sm outline-none transition-all focus:border-emerald-500 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.15)] placeholder:text-[#5a5a72]"
+              className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-lg text-sm outline-none transition-all focus:border-[#387ED1] focus:shadow-[0_0_0_3px_rgba(56,126,209,0.2)] placeholder:text-gray-400"
             />
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="login-password" className="text-[13px] font-medium text-[#8b8ba3] tracking-wide">Password</label>
+          {/* Password */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="login-password"
+              className="text-sm font-medium text-[#387ED1]"
+            >
+              Password
+            </label>
+
             <div className="relative">
               <input
                 id="login-password"
@@ -78,46 +98,73 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
-                className="w-full bg-white/[0.04] border border-white/[0.06] text-[#f0f0f5] py-3 px-4 pr-12 rounded-lg text-sm outline-none transition-all focus:border-emerald-500 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.15)] placeholder:text-[#5a5a72]"
+                className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-12 rounded-lg text-sm outline-none transition-all focus:border-[#387ED1] focus:shadow-[0_0_0_3px_rgba(56,126,209,0.2)] placeholder:text-gray-400"
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5a5a72] hover:text-white transition-colors bg-transparent border-none cursor-pointer p-1"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#387ED1] transition-colors"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
           </div>
 
+          {/* Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-gradient-to-br from-emerald-500 to-emerald-700 text-white font-semibold text-[15px] border-none rounded-lg cursor-pointer hover:-translate-y-0.5  active:translate-y-0 active:scale-[0.98] disabled:opacity-80 disabled:pointer-events-none flex items-center justify-center"
+            className="w-full py-3.5 bg-[#387ED1] hover:bg-[#2f6db7] text-white font-semibold text-[15px] rounded-lg transition-all active:scale-[0.98] disabled:opacity-80 disabled:pointer-events-none flex items-center justify-center"
           >
             {loading ? (
-              <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin-loader"></span>
-            ) : 'Sign In'}
+              <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+            ) : (
+              'Sign In'
+            )}
           </button>
         </form>
 
-        {/* Demo credentials */}
-        <div className="mt-7 text-center">
-          <p className="text-[11px] text-[#5a5a72] uppercase tracking-widest mb-2.5">Demo Credentials</p>
-          <div className="flex gap-2">
+        {/* Demo Credentials */}
+        <div className="mt-8 text-center">
+          <p className="text-[11px] text-gray-400 uppercase tracking-[3px] mb-3">
+            Demo Credentials
+          </p>
+
+          <div className="flex gap-3">
+            
+            {/* Admin */}
             <div
-              onClick={() => { setEmail('admin@example.com'); setPassword('123') }}
-              className="flex-1 p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] cursor-pointer transition-all text-center hover:border-emerald-500 hover:bg-emerald-500/[0.08]"
+              onClick={() => {
+                setEmail('admin@example.com')
+                setPassword('123')
+              }}
+              className="flex-1 p-3 rounded-xl bg-[#f8fbff] border border-[#dbeafe] cursor-pointer transition-all text-center hover:border-[#387ED1] hover:bg-[#387ED1]/10"
             >
-              <span className="block text-xs font-semibold text-emerald-400 mb-0.5">Admin</span>
-              <span className="block text-[11px] text-[#5a5a72]">admin@example.com</span>
+              <span className="block text-sm font-semibold text-[#387ED1] mb-1">
+                Admin
+              </span>
+
+              <span className="block text-xs text-gray-500">
+                admin@example.com
+              </span>
             </div>
+
+            {/* Employee */}
             <div
-              onClick={() => { setEmail('employee1@example.com'); setPassword('123') }}
-              className="flex-1 p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] cursor-pointer transition-all text-center hover:border-emerald-500 hover:bg-emerald-500/[0.08]"
+              onClick={() => {
+                setEmail('employee1@example.com')
+                setPassword('123')
+              }}
+              className="flex-1 p-3 rounded-xl bg-[#f8fbff] border border-[#dbeafe] cursor-pointer transition-all text-center hover:border-[#387ED1] hover:bg-[#387ED1]/10"
             >
-              <span className="block text-xs font-semibold text-emerald-400 mb-0.5">Employee</span>
-              <span className="block text-[11px] text-[#5a5a72]">employee1@example.com</span>
+              <span className="block text-sm font-semibold text-[#387ED1] mb-1">
+                Employee
+              </span>
+
+              <span className="block text-xs text-gray-500">
+                employee1@example.com
+              </span>
             </div>
           </div>
         </div>

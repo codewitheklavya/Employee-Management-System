@@ -13,20 +13,25 @@ const Header = () => {
   }
 
   return (
-    <header className="flex items-center justify-between pb-6 border-b border-white/[0.06] flex-wrap gap-4">
-      <div className="flex flex-col gap-0.5">
-        <span className="text-sm text-[#8b8ba3]">
+    <header className="flex items-center justify-between flex-wrap gap-4">
+      
+      {/* Left */}
+      <div className="flex flex-col gap-1">
+        <span className="text-sm text-gray-500 font-medium">
           {user === 'admin' ? 'Welcome back,' : 'Hello,'}
         </span>
-        <h1 className="text-[28px] font-bold tracking-tight text-white max-sm:text-[22px]">
-          {loggedInUserData?.firstName || 'User'} <span className="animate-wave">👋</span>
+
+        <h1 className="text-[32px] font-bold tracking-tight text-[#387ED1] max-sm:text-[24px]">
+          {loggedInUserData?.firstName || 'User'}{' '}
+          <span className="animate-wave inline-block">👋</span>
         </h1>
       </div>
 
+      {/* Logout Button */}
       <button
         onClick={handleLogout}
         id="logout-button"
-        className="flex items-center gap-2 px-5 py-2.5 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 font-medium text-sm cursor-pointer transition-all hover:bg-rose-500/20 hover:border-rose-500/40 hover:-translate-y-0.5 active:scale-[0.97]"
+        className="flex items-center gap-2 px-5 py-3 bg-white border border-[#387ED1] rounded-xl text-[#387ED1] font-semibold text-sm cursor-pointer transition-all hover:bg-[#387ED1] hover:text-white hover:shadow-md active:scale-[0.97]"
       >
         <LogOut size={18} />
         <span>Log Out</span>

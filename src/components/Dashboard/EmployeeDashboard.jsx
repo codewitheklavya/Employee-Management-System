@@ -10,10 +10,26 @@ const EmployeeDashboard = () => {
   if (!loggedInUserData) return null
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] p-4 sm:p-6 md:p-8 text-white">
-      <Header />
-      <TaskListNumber data={loggedInUserData} />
-      <TaskList data={loggedInUserData} />
+    <div className="min-h-screen bg-[#f4f9ff] p-4 sm:p-6 md:p-8 text-gray-800">
+      
+      {/* Main Container */}
+      <div className="max-w-[1600px] mx-auto">
+        
+        {/* Header */}
+        <div className="bg-white border border-[#dbeafe] rounded-2xl shadow-sm p-5 sm:p-6">
+          <Header />
+        </div>
+
+        {/* Task Numbers */}
+        <div className="mt-6">
+          <TaskListNumber data={loggedInUserData} />
+        </div>
+
+        {/* Task List */}
+        <div className="mt-8">
+          <TaskList data={loggedInUserData} />
+        </div>
+      </div>
     </div>
   )
 }
