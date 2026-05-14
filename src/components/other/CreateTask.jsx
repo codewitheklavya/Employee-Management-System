@@ -58,16 +58,16 @@ const CreateTask = () => {
   }
 
   return (
-    <div className="mt-8 bg-white border border-[#dbeafe] rounded-2xl p-7 shadow-sm">
+    <div className="mt-8 bg-white border border-[#dbeafe] rounded-2xl p-7 shadow-sm max-sm:p-5">
       
       {/* Header */}
       <div className="flex items-center gap-3 mb-7">
-        <div className="w-11 h-11 rounded-xl bg-[#387ED1]/10 flex items-center justify-center">
+        <div className="w-11 h-11 rounded-xl bg-[#387ED1]/10 flex items-center justify-center shrink-0">
           <PlusCircle size={22} className="text-[#387ED1]" />
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold text-[#387ED1]">
+          <h2 className="text-2xl font-bold text-[#387ED1] max-sm:text-xl">
             Create New Task
           </h2>
 
@@ -77,7 +77,7 @@ const CreateTask = () => {
         </div>
       </div>
 
-      {/* Success */}
+      {/* Success Message */}
       {success && (
         <div className="flex items-center gap-2 bg-emerald-500 text-white px-4 py-3 rounded-xl text-sm font-medium mb-5">
           <CheckCircle size={18} />
@@ -85,9 +85,9 @@ const CreateTask = () => {
         </div>
       )}
 
-      {/* Error */}
+      {/* Error Message */}
       {error && (
-        <div className="bg-red-500 text-white px-4 py-3 rounded-xl text-sm font-medium mb-5">
+        <div className="bg-red-500 text-white px-4 py-3 rounded-xl text-sm font-medium mb-5 break-words">
           {error}
         </div>
       )}
@@ -95,11 +95,11 @@ const CreateTask = () => {
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="flex gap-7 flex-wrap"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
         
         {/* Left Side */}
-        <div className="flex-1 min-w-[280px] flex flex-col gap-5">
+        <div className="flex flex-col gap-5">
 
           {/* Task Title */}
           <div className="flex flex-col gap-2">
@@ -154,7 +154,7 @@ const CreateTask = () => {
               required
               value={assignTo}
               onChange={(e) => setAssignTo(e.target.value)}
-              className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl text-sm outline-none transition-all focus:border-[#387ED1] cursor-pointer"
+              className="w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl text-sm outline-none transition-all focus:border-[#387ED1] focus:shadow-[0_0_0_3px_rgba(56,126,209,0.15)] cursor-pointer"
             >
               <option value="">Select employee</option>
 
@@ -191,10 +191,10 @@ const CreateTask = () => {
         </div>
 
         {/* Right Side */}
-        <div className="flex-1 min-w-[280px] flex flex-col gap-5">
+        <div className="flex flex-col gap-5">
 
           {/* Description */}
-          <div className="flex flex-col gap-2 flex-1">
+          <div className="flex flex-col gap-2">
             <label
               htmlFor="task-description"
               className="text-sm font-semibold text-[#387ED1]"
@@ -204,16 +204,16 @@ const CreateTask = () => {
 
             <textarea
               id="task-description"
-              rows="8"
+              rows="6"
               required
               placeholder="Describe the task in detail..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full flex-1 min-h-[180px] resize-none bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl text-sm outline-none transition-all focus:border-[#387ED1] focus:shadow-[0_0_0_3px_rgba(56,126,209,0.15)] placeholder:text-gray-400"
+              className="w-full min-h-[160px] resize-none bg-white border border-gray-300 text-gray-700 py-3 px-4 rounded-xl text-sm outline-none transition-all focus:border-[#387ED1] focus:shadow-[0_0_0_3px_rgba(56,126,209,0.15)] placeholder:text-gray-400"
             ></textarea>
           </div>
 
-          {/* Button */}
+          {/* Submit Button */}
           <button
             type="submit"
             id="create-task-button"
